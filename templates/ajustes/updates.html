@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Edit Establecimiento  {% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group border-bottom row">
+            <label for="" class="col">
+                Actualizar Información de Establecimiento
+            </label>
+            <div class="col">
+                {{object.get_estado_display}}
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Información básica -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Información General</h5>
+                </div>
+                <div class="card-body">
+                    {{ form.nombre }}
+                    {{ form.telefono }}
+                    {{ form.direccion }}
+                    {{ form.logo }}
+                </div>
+            </div>
+
+            <!-- Documentos -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Documentos del Establecimiento</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        {{ form.reglamento_interno.label_tag }}
+                        {{ form.reglamento_interno }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.nombramiento_encargado_convivencia.label_tag }}
+                        {{ form.nombramiento_encargado_convivencia }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.plan_gestion_convivencia.label_tag }}
+                        {{ form.plan_gestion_convivencia }}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

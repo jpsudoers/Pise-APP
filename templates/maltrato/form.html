@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ titulo }}</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    Por favor corrija los siguientes errores:
+                    {{ form.errors }}
+                </div>
+                {% endif %}
+
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="form-group mb-3">
+                    <label for="{{ form.fecha_creacion.id_for_label }}">Fecha</label>
+                    {{ form.fecha_creacion }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="{{ form.denunciante.id_for_label }}">Denunciante</label>
+                    {{ form.denunciante }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="{{ form.funcionario_victima.id_for_label }}">Funcionario Víctima</label>
+                    {{ form.funcionario_victima }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="{{ form.detalle.id_for_label }}">Detalle</label>
+                    {{ form.detalle }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="{{ form.archivo_declaracion_individual.id_for_label }}">Archivo de Declaración</label>
+                    {{ form.archivo_declaracion_individual }}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="{% url 'maltrato_list' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

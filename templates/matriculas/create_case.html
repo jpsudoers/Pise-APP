@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Matriculas {% endblock title %}
+
+{% block pagetitle %} Alumnos {% endblock pagetitle %}
+{% block fullcard %}
+
+<div class="card">
+    {% if mensaje %}
+    <div class="alert alert-info text-center" role="alert">
+        {{mensaje}}
+    </div>
+    {% endif %}
+    <div id="alert" class="alert alert-success text-center" style="display: none;" role="alert">
+        <p id="content"></p>
+    </div>
+    <div class="card-header">
+            Cargar Nomina Alumnos
+            <div class="card-tools">
+                <a href="#" class="btn btn-tool"></a>
+                <a href="{% url 'matriculas' %}" class="btn btn-tool">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+        </div>
+    <div class="card-body">
+        {% block contenido %}  
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input class="form-control form-control-file"  type="file" name="importData">
+                    <div class="input-group-append">
+                    <button class="btn btn-success" type="submit">Cargar</button>
+                    </div>
+            </div>
+          </form>
+          <div class="alert alert-light">
+            Para inscribir solo un alumno: <a class="bg-light" href="{% url 'matriculas_add' %}" class="btn btn-tool"><b>aqui</b></a>
+          </div>
+        <!--div class="input-group mb-3">
+            <input class="form-control form-control-file" type="file" name="importData">  
+            <div class="input-group-append">
+                <button class="btn btn-md btn-success" type="submit">Subir</button>  
+            </div>
+        </div>
+    </form>--> 
+        {% endblock %}  
+    </div>
+
+</div>
+{% if alumnos %}
+<div class="card">
+    <form method="post" enctype="multipart/form-data"></form>
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-11">Los Siguientes registros ya existen:</div>
+            <div class="col-md-1"><button id="btn_save" class="btn btn-success">Aceptar</button></div>
+        
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="alumnos" class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" style="width: 30%">Rut</th>
+                    <th scope="col" style="width: 30%">Nombre</th>
+                    <th scope="col" style="width: 30%">Apellidos</th>
+                    <th scope="col" style="width: 45%">Curso</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for matricula in alumnos %}
+                <tr>
+                    <td>{{ matricula.rut }}-{{ matricula.dv }}</td>
+                    <td>{{ matricula.nombres }}</td>
+                    <td>{{ matricula.apellido_paterno }} {{ matricula.apellido_materno }}</td>
+                    <td>{{ matricula.nivel }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock fullcard %}
+
+{% block morejs %}
+<script>
+     $('#alumnos').DataTable({
+        "searching": false, 
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+    });
+    $('#alumnos_filter').hide();
+
+   $("#btn_save").on("click", function(){
+        url= '{% url 'matriculas' %}';
+        $("#content").html("Redireccionando a Alumnos");
+        $("#alert").show();
+        setTimeout(function(){window.location = url;}, 900);
+    })
+</script>
+{% endblock morejs %}

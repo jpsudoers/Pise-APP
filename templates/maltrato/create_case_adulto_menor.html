@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Maltrato{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'lib/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+
+<script src="{% static 'lib/plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'lib/plugins/select2/js/i18n/es.js' %}"></script>
+
+{% endblock head %}
+{% block fullcard %}
+<div class="card">
+    <div class="card-header">
+        <div class="row d-flex">
+            <div class="col-sm-12">
+                <h1 class="display-6">Crear Caso Maltrato Adulto a Menor</h1>
+            </div>
+        </div>
+        <h1 style="color: red;"> ALERTA: Este tipo de situaciones podrían ser catalogadas como delito, por lo tanto, debe ser gestionado por el(la) director(a).
+        </h1>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        
+        <button type="submit" class="btn btn-success">Crear</button>
+    </form>
+</div>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('#id_victima').select2({
+            language: "es",
+            theme: 'bootstrap4'
+        })
+
+        //Initialize Select2 Elements
+        $('#id_alumno_agresor').select2({
+            language: "es",
+            theme: 'bootstrap4'
+        })
+    })
+</script>
+{% endblock fullcard %}

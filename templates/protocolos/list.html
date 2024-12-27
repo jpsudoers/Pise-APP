@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Versiones del Protocolo{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Versiones del Protocolo - {{ view.kwargs.tipo|upper }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Versión</th>
+                        <th>Fecha de Subida</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for protocolo in protocolos %}
+                    <tr>
+                        <td>{{ protocolo.version }}</td>
+                        <td>{{ protocolo.fecha_subida|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if protocolo.activo %}
+                            <span class="badge bg-success">Activo</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ protocolo.archivo.url }}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-download"></i> Descargar
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No hay protocolos subidos</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

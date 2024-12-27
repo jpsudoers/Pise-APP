@@ -1,0 +1,15 @@
+{% load custom_filters %}
+{% for caso in casos_list %}
+    <tr>
+        <td>
+            {{ caso.fecha_creacion }}
+            {% if casos_no_leidos|get_item:caso.id %}
+                <i class="fa fa-exclamation-circle text-danger" title="No leído"></i>
+            {% endif %}
+        </td>
+        <td>{{ caso.victima }}</td>
+        <td>{{ caso.get_tipo_connotacion_sexual_display }}</td>
+        <td>{{ caso.get_estado_display }}</td>
+        <!-- ... resto de las columnas ... -->
+    </tr>
+{% endfor %} 

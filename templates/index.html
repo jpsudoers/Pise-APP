@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+{% load i18n %}
+
+{% block fullcard %}
+<img src="{% static 'img/LogoV1.png' %}" style="width:100px" class="mx-auto d-block" alt="Logo de la aplicación"> 
+</br>
+<!--#region Alerta rapida-->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-primary card-outline">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="card-header">
+                    <div class="card-title">Alerta Rápida para Caso</div>
+                    <div class="card-tools">
+                        {% if user.establecimiento %}
+                            {% if user.establecimiento.nombramiento_encargado_convivencia %}
+                            <a class="btn btn-primary" href="{{user.establecimiento.nombramiento_encargado_convivencia.url}}">
+                                <i class="fa fa-download"></i> Nombramiento Encargado de convivencia escolar
+                            </a>
+                            {% endif %}
+                            
+                            {% if user.establecimiento.plan_gestion_convivencia %}
+                            <a class="btn btn-primary" href="{{user.establecimiento.plan_gestion_convivencia.url}}">
+                                <i class="fa fa-download"></i> Plan de gestión de convivencia escolar
+                            </a>
+                            {% endif %}
+                            
+                            {% if user.establecimiento.reglamento_interno %}
+                            <a class="btn btn-primary" href="{{user.establecimiento.reglamento_interno.url}}">
+                                <i class="fa fa-download"></i> Reglamento Interno
+                            </a>
+                            {% endif %}
+                        {% else %}
+                            <p class="text-muted">No hay establecimiento asociado al usuario</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="correos">Enviar a :</label>
+                        {% for item in correos %}
+                        {{item}};
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+
+                        {{form}}
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-left">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+
+                    </div>
+                </div>
+            </form>
+            {% if mensaje %}
+            <div class="alert alert-primary text-center" role="alert">
+                {{mensaje}}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!--#endregion-->
+<!--#region protocolo reglamento-->
+<div class="row">
+
+</div>
+
+
+    <div>
+
+        <h2 style="color: blue;text-align: center;"> REGLAMENTO INTERNO DE  EDUCACIÓN PARVULARIA DEBE INCORPORAR LOS SIGUIENTES PROTOCOLOS FRENTE A:  (CIRCULAR N°860)</h2>
+        <ul>
+                <li>
+                    <h4 style="color: blue;">Accidentes de párvulos:</h4>
+                    <p style="color: black">Procedimientos para abordar los diferentes tipos de accidentes a los que puedan verse enfrentados los párvulos, u otras actividades pedagógicas que estén bajo la responsabilidad del establecimiento</p>
+                </li>
+                <li>
+                    <h4 style="color: blue;">Situaciones de maltrato entre miembros adultos de la comunidad educativa:</h4>
+                    <p style="color: black">Procedimientos aplicables frente a hechos de violencia física o sicológica entre apoderados, el personal y todo integrante adulto de la comunidad educativa.</p>
+                </li>
+                <li>
+                    <h4 style="color: blue;">Situaciones de vulneración de derechos de los párvulos:</h4>
+                    <p style="color: black">Procedimientos para abordar descuidos o tratos negligentes, asociados a la desatención de necesidades físicas, psicológicas o emocionales de los párvulos.</p>
+                </li>
+                <li>
+                    <h4 style="color: blue;">
+                        Hechos de maltrato infantil, connotación sexual o agresiones sexuales
+                        {% if casos_no_leidos > 0 %}
+                            <i class="fa fa-circle text-danger" style="font-size: 10px; position: relative; top: -10px;"></i>
+                            <small>({{ casos_no_leidos }})</small>
+                        {% endif %}
+                    </h4>
+                    <p style="color: black;">Procedimientos para adoptar medidas de protección que permitan resguardar la integridad física y psicológica de niños y niñas, frente a este tipo de situaciones.</p>
+                </li>
+        </ul>
+                    
+                        
+    
+    
+            </div>
+<!--#endregion-->
+<!-- Agrega esto temporalmente para debug -->
+<div style="display:none">
+    Debug: {{ casos_no_leidos }}
+</div>
+{% endblock fullcard %}
