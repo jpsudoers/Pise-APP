@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Crear archivo build.sh en la raíz del proyecto
+echo "Listing directory contents..."
+ls -la
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-python manage.py collectstatic --no-input
+python manage.py collectstatic --no-input --clear
 python manage.py migrate 
