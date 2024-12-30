@@ -1,9 +1,9 @@
 # Asegúrate de que tienes todas tus dependencias
 django
 gunicorn
+whitenoise
+dj-database-url
 psycopg2-binary
-whitenoise  # para archivos estáticos
-dj-database-url  # para configuración de base de datos 
 asgiref==3.4.1
 boto3==1.20.5
 botocore==1.23.5
