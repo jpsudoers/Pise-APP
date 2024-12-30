@@ -2,8 +2,10 @@
 # exit on error
 set -o errexit
 
-# Crear Procfile correcto (sin espacios extras y con formato Unix)
-printf "web: gunicorn config.wsgi:application --log-file -\n" > Procfile
+# Crear Procfile correcto usando un método diferente
+cat > Procfile << 'EOL'
+web: gunicorn config.wsgi:application
+EOL
 
 echo "Instalando dependencias..."
 pip install -r requirements.txt
@@ -20,6 +22,8 @@ python manage.py makemigrations
 echo "Ejecutando migraciones..."
 python manage.py migrate
 
-# Mostrar contenido del Procfile para verificar
+# Verificar el contenido y formato del Procfile
 echo "Contenido del Procfile:"
-cat Procfile 
+cat Procfile
+echo "Formato del Procfile (hexdump):"
+hexdump -C Procfile 
