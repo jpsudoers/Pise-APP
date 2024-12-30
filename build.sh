@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-echo "Listing directory contents..."
-ls -la
-python -m pip install --upgrade pip
+# exit on error
+set -o errexit
+
 pip install -r requirements.txt
-python manage.py collectstatic --no-input --clear
+
+python manage.py collectstatic --no-input
 python manage.py migrate 
