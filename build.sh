@@ -2,6 +2,9 @@
 # exit on error
 set -o errexit
 
+# Crear Procfile correcto
+echo "web: gunicorn config.wsgi:application --log-file -" > Procfile
+
 echo "Instalando dependencias..."
 pip install -r requirements.txt
 
