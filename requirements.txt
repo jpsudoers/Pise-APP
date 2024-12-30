@@ -1,0 +1,6 @@
+# Asegúrate de que tienes todas tus dependencias
+django
+gunicorn
+psycopg2-binary
+whitenoise  # para archivos estáticos
+dj-database-url  # para configuración de base de datos 
