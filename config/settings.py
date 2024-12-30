@@ -16,7 +16,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-oaw1s+8ls$0f@43k48ryqgx(ie
 
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.onrender.com',  # Permite todos los subdominios de render.com
+    'tu-app.onrender.com'  # Reemplaza con tu dominio específico
+]
 
 # Application definition
 INSTALLED_APPS = [
