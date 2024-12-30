@@ -2,11 +2,6 @@
 # exit on error
 set -o errexit
 
-echo "Creando estructura de directorios..."
-mkdir -p pise_app
-touch pise_app/__init__.py
-mv settings.py urls.py wsgi.py pise_app/
-
 echo "Contenido del directorio actual:"
 ls -la
 

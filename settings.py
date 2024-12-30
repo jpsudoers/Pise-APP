@@ -50,7 +50,7 @@ MIDDLEWARE = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Asegúrate de que ROOT_URLCONF apunte correctamente
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'PISE_APP.urls'
 
 # Y también el WSGI_APPLICATION
-WSGI_APPLICATION = 'wsgi.application' 
+WSGI_APPLICATION = 'PISE_APP.wsgi.application' 
