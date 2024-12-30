@@ -14,13 +14,18 @@ fi
 echo "==== Contenido del directorio actual ===="
 ls -la
 
-echo "==== Estructura completa del proyecto ===="
-tree -a
+echo "==== Contenido de PISE_APP ===="
+ls -la PISE_APP/ 2>/dev/null || echo "El directorio PISE_APP no existe"
+
+echo "==== Archivos Python en el proyecto ===="
+find . -name "*.py" -type f
 
 # Asegurarse de que el directorio static existe
 mkdir -p static
 
+# Instalar dependencias
 pip install -r requirements.txt
 
-python manage.py collectstatic --no-input
-python manage.py migrate 
+# Ejecutar comandos de Django
+DJANGO_SETTINGS_MODULE=PISE_APP.settings python manage.py collectstatic --no-input
+DJANGO_SETTINGS_MODULE=PISE_APP.settings python manage.py migrate 
