@@ -2,30 +2,60 @@
 # exit on error
 set -o errexit
 
-echo "==== Verificando y corrigiendo estructura ===="
-if [ -f "settings.py" ] && [ ! -f "PISE_APP/settings.py" ]; then
-    mkdir -p PISE_APP
-    mv settings.py PISE_APP/
-    mv urls.py PISE_APP/ 2>/dev/null || true
-    mv wsgi.py PISE_APP/ 2>/dev/null || true
-    touch PISE_APP/__init__.py
-fi
+echo "==== Verificando estructura del proyecto ===="
+# Crear directorio PISE_APP si no existe
+mkdir -p PISE_APP
+
+# Asegurarse de que existe __init__.py
+touch PISE_APP/__init__.py
+
+# Mover archivos principales si están en la raíz
+for file in settings.py urls.py wsgi.py; do
+    if [ -f "$file" ]; then
+        echo "Moviendo $file a PISE_APP/"
+        mv "$file" PISE_APP/
+    fi
+done
 
 echo "==== Contenido del directorio actual ===="
 ls -la
 
 echo "==== Contenido de PISE_APP ===="
-ls -la PISE_APP/ 2>/dev/null || echo "El directorio PISE_APP no existe"
+ls -la PISE_APP/
 
-echo "==== Archivos Python en el proyecto ===="
-find . -name "*.py" -type f
+# Crear archivos necesarios si no existen
+if [ ! -f "PISE_APP/urls.py" ]; then
+    echo "Creando urls.py básico..."
+    cat > PISE_APP/urls.py << EOL
+from django.contrib import admin
+from django.urls import path, include
 
-# Asegurarse de que el directorio static existe
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+EOL
+fi
+
+if [ ! -f "PISE_APP/wsgi.py" ]; then
+    echo "Creando wsgi.py básico..."
+    cat > PISE_APP/wsgi.py << EOL
+import os
+from django.core.wsgi import get_wsgi_application
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PISE_APP.settings')
+application = get_wsgi_application()
+EOL
+fi
+
+# Crear directorios necesarios
 mkdir -p static
+mkdir -p staticfiles
 
 # Instalar dependencias
 pip install -r requirements.txt
 
-# Ejecutar comandos de Django
-DJANGO_SETTINGS_MODULE=PISE_APP.settings python manage.py collectstatic --no-input
-DJANGO_SETTINGS_MODULE=PISE_APP.settings python manage.py migrate 
+# Ejecutar comandos de Django con debug
+echo "==== Ejecutando collectstatic ===="
+python -v manage.py collectstatic --no-input
+
+echo "==== Ejecutando migrate ===="
+python -v manage.py migrate 
