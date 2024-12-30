@@ -96,17 +96,6 @@ DATABASES = {
         'HOST': "localhost",
         'PORT': "5432",  # 5432 by default
     }
-'''
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "PiseApp",
-        'USER': "pise",
-        'PASSWORD': "pise_2022",
-        'HOST': "35.170.104.222",
-        'PORT': "5432",  # 5432 by default
-    }
 }
 
 # import dj_database_url
