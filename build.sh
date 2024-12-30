@@ -2,6 +2,11 @@
 # exit on error
 set -o errexit
 
+# Renombrar el directorio si es necesario
+if [ -d "PISE_APP" ] && [ ! -d "pise_app" ]; then
+    mv PISE_APP pise_app
+fi
+
 echo "Contenido del directorio actual:"
 ls -la
 
