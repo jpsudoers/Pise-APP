@@ -2,30 +2,26 @@
 # exit on error
 set -o errexit
 
-# Crear Procfile correcto
-cat > Procfile << 'EOL'
-web: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
-EOL
+echo "Actualizando pip..."
+python -m pip install --upgrade pip
 
 echo "Instalando dependencias..."
 pip install -r requirements.txt
-
-# Verificar instalación de rest_framework
-echo "Verificando instalación de rest_framework..."
-pip list | grep rest-framework
 
 echo "Creando directorios necesarios..."
 mkdir -p static staticfiles media
 
 echo "Recolectando archivos estáticos..."
-python manage.py collectstatic --no-input
+python manage.py collectstatic --no-input --noinput
 
 echo "Creando migraciones..."
-python manage.py makemigrations
+python manage.py makemigrations --noinput
 
 echo "Ejecutando migraciones..."
-python manage.py migrate
+python manage.py migrate --noinput
 
-# Verificar el contenido del Procfile
+# Crear Procfile
+echo "web: gunicorn config.wsgi:application --bind 0.0.0.0:\$PORT" > Procfile
+
 echo "Contenido del Procfile:"
 cat Procfile 
