@@ -10,6 +10,10 @@ EOL
 echo "Instalando dependencias..."
 pip install -r requirements.txt
 
+# Verificar instalación de rest_framework
+echo "Verificando instalación de rest_framework..."
+pip list | grep rest-framework
+
 echo "Creando directorios necesarios..."
 mkdir -p static staticfiles media
 
