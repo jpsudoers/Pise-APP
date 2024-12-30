@@ -53,4 +53,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'PISE_APP.urls'
 
 # Y también el WSGI_APPLICATION
-WSGI_APPLICATION = 'PISE_APP.wsgi.application' 
+WSGI_APPLICATION = 'PISE_APP.wsgi.application'
