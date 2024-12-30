@@ -4,7 +4,7 @@ set -o errexit
 
 # Crear Procfile correcto
 cat > Procfile << 'EOL'
-web: gunicorn config.wsgi:application
+web: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
 EOL
 
 echo "Instalando dependencias..."
