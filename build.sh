@@ -2,7 +2,7 @@
 # exit on error
 set -o errexit
 
-# Crear Procfile correcto usando un método diferente
+# Crear Procfile correcto
 cat > Procfile << 'EOL'
 web: gunicorn config.wsgi:application
 EOL
@@ -22,8 +22,6 @@ python manage.py makemigrations
 echo "Ejecutando migraciones..."
 python manage.py migrate
 
-# Verificar el contenido y formato del Procfile
+# Verificar el contenido del Procfile
 echo "Contenido del Procfile:"
-cat Procfile
-echo "Formato del Procfile (hexdump):"
-hexdump -C Procfile 
+cat Procfile 
